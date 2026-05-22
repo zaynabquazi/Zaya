@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head><title>Zaya Audio</title></head>
+<body>
+<script>
+  chrome.runtime.onMessage.addListener((message) => {
+    if (message.type === 'PLAY_SOUND') {
+      const audio = new Audio(chrome.runtime.getURL('sounds/ping.wav'));
+      audio.volume = 0.5;
+      audio.play();
+    }
+  });
+</script>
+</body>
+</html>

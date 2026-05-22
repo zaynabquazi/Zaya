@@ -130,7 +130,24 @@ function handleUpdateReminders(reminders: ReminderConfig[]) {
   });
 }
 
-// ─── Alarm Fired → Notification ─────────────────────────────────────────────
+// ─── Alarm Fired → Notification + Sound ─────────────────────────────────────
+
+function playPingSound() {
+  // Play sound by injecting into the active tab
+  chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+    const tabId = tabs[0]?.id;
+    if (tabId) {
+      chrome.scripting.executeScript({
+        target: { tabId },
+        func: () => {
+          const audio = new Audio(chrome.runtime.getURL('sounds/ping.wav'));
+          audio.volume = 0.5;
+          audio.play().catch(() => {});
+        },
+      }).catch(() => {});
+    }
+  });
+}
 
 chrome.alarms.onAlarm.addListener((alarm) => {
   const type = alarm.name.replace('zaya-', '');
@@ -145,6 +162,7 @@ chrome.alarms.onAlarm.addListener((alarm) => {
       message,
       requireInteraction: true,
     });
+    playPingSound();
   }
 });
 

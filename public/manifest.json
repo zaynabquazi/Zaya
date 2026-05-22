@@ -24,7 +24,7 @@
   ],
   "web_accessible_resources": [
     {
-      "resources": ["src/sidebar/index.html", "sidebar.js", "chunks/*", "assets/*"],
+      "resources": ["src/sidebar/index.html", "sidebar.js", "chunks/*", "assets/*", "sounds/*"],
       "matches": ["<all_urls>"]
     }
   ],
